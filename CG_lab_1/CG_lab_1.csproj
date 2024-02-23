@@ -55,11 +55,19 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GaussianFilter.cs" />
+    <Compile Include="GlassEffect.cs" />
     <Compile Include="GrayScaleFilters.cs" />
+    <Compile Include="GrayWorldFilter.cs" />
+    <Compile Include="HistogramStretching.cs" />
     <Compile Include="InvertFilter.cs" />
     <Compile Include="MatrixFilter.cs" />
+    <Compile Include="MedianFilter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SepiaFilter.cs" />
+    <Compile Include="SharpnessFilter.cs" />
+    <Compile Include="SobelFilter.cs" />
+    <Compile Include="WavesFilter.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
