@@ -7,15 +7,20 @@ using System.Threading.Tasks;
 
 namespace CG_lab_1
 {
-    internal class SharpnessFilter : MatrixFilter
+    internal class GlowEdgeFilter : MatrixFilter
     {
-        public SharpnessFilter() : base(new float[,]
+        public GlowEdgeFilter() : base(CreateKernel())
         {
+        }
+
+        private static float[,] CreateKernel()
+        {
+            return new float[,]
+            {
             { -1, -1, -1 },
-            { -1, 9, -1 },
+            { -1,  8, -1 },
             { -1, -1, -1 }
-        })
-        {
+            };
         }
 
         protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
@@ -25,7 +30,6 @@ namespace CG_lab_1
             float resultR = 0;
             float resultG = 0;
             float resultB = 0;
-
             for (int l = -radiusY; l <= radiusY; l++)
             {
                 for (int k = -radiusX; k <= radiusX; k++)
@@ -39,10 +43,9 @@ namespace CG_lab_1
                     resultB += neighborColor.B * kernel[k + radiusX, l + radiusY];
                 }
             }
-
-            resultR = Clamp((int)resultR, 0, 255);
-            resultG = Clamp((int)resultG, 0, 255);
-            resultB = Clamp((int)resultB, 0, 255);
+            resultR = Clamp((int)(resultR + 128), 0, 255);
+            resultG = Clamp((int)(resultG + 128), 0, 255);
+            resultB = Clamp((int)(resultB + 128), 0, 255);
 
             return Color.FromArgb((int)resultR, (int)resultG, (int)resultB);
         }

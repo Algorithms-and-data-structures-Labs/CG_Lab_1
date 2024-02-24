@@ -19,3 +19,13 @@ C:\Users\1367873\OneDrive\Рабочий стол\Учеба\Компьютер�
 C:\Users\1367873\OneDrive\Рабочий стол\Учеба\Компьютерная графика\CG_Lab_1\CG_lab_1\obj\Debug\CG_lab_1.csproj.CoreCompileInputs.cache
 C:\Users\1367873\OneDrive\Рабочий стол\Учеба\Компьютерная графика\CG_Lab_1\CG_lab_1\obj\Debug\CG_lab_1.exe
 C:\Users\1367873\OneDrive\Рабочий стол\Учеба\Компьютерная графика\CG_Lab_1\CG_lab_1\obj\Debug\CG_lab_1.pdb
+D:\CompGraph\CG_Lab_1\CG_lab_1\bin\Debug\CG_lab_1.exe.config
+D:\CompGraph\CG_Lab_1\CG_lab_1\bin\Debug\CG_lab_1.exe
+D:\CompGraph\CG_Lab_1\CG_lab_1\bin\Debug\CG_lab_1.pdb
+D:\CompGraph\CG_Lab_1\CG_lab_1\obj\Debug\CG_lab_1.csproj.AssemblyReference.cache
+D:\CompGraph\CG_Lab_1\CG_lab_1\obj\Debug\CG_lab_1.Form1.resources
+D:\CompGraph\CG_Lab_1\CG_lab_1\obj\Debug\CG_lab_1.Properties.Resources.resources
+D:\CompGraph\CG_Lab_1\CG_lab_1\obj\Debug\CG_lab_1.csproj.GenerateResource.cache
+D:\CompGraph\CG_Lab_1\CG_lab_1\obj\Debug\CG_lab_1.csproj.CoreCompileInputs.cache
+D:\CompGraph\CG_Lab_1\CG_lab_1\obj\Debug\CG_lab_1.exe
+D:\CompGraph\CG_Lab_1\CG_lab_1\obj\Debug\CG_lab_1.pdb
