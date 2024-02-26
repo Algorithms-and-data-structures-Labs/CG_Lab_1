@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CG_lab_1
 {
-    internal class Brightness:Filters
+    internal class Brightness : Filters
     {
         protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
         {

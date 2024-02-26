@@ -9,12 +9,16 @@ namespace CG_lab_1
 {
     internal class ColorCorrectionFilter : Filters
     {
+        private Color referenceColor;
+
+        public ColorCorrectionFilter(Color referenceColor)
+        {
+            this.referenceColor = referenceColor;
+        }
+
         protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
         {
             Color sourceColor = sourceImage.GetPixel(x, y);
-            Color referenceColor=Color.Red;
-            //Color referenceColor=Color.Green;
-            //Color referenceColor=Color.Blue;
             int deltaR = sourceColor.R - referenceColor.R;
             int deltaG = sourceColor.G - referenceColor.G;
             int deltaB = sourceColor.B - referenceColor.B;

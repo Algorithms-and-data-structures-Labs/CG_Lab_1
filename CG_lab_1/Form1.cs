@@ -14,25 +14,32 @@ namespace CG_lab_1
     public partial class Form1 : Form
     {
         Bitmap image;
+        private Stack<Bitmap> history;
         public Form1()
         {
             InitializeComponent();
+            history = new Stack<Bitmap>();
         }
-        private Bitmap previousImage;
-        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void отменитьПоследнееДействиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Image files|*.png;*.jpg;*.bmp;|All files(*.*)|*.*";
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (history.Any())
             {
-                image = new Bitmap(dialog.FileName);
+                image = history.Pop();
                 pictureBox1.Image = image;
                 pictureBox1.Refresh();
             }
-
         }
+
+        private void эффектВолныToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new WavesFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
+            history.Push(image);
             Bitmap newImage = ((Filters)e.Argument).processImage(image, backgroundWorker1);
             if (backgroundWorker1.CancellationPending != true)
                 image = newImage;
@@ -55,67 +62,54 @@ namespace CG_lab_1
         {
             backgroundWorker1.CancelAsync();
         }
+        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Image files|*.png;*.jpg;*.bmp;|All files(*.*)|*.*";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                image = new Bitmap(dialog.FileName);
+                pictureBox1.Image = image;
+                pictureBox1.Refresh();
+                history.Clear();
+            }
+        }
+        
 
         private void инверсияToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new InvertFilter();
-            //Bitmap resultImage = filter.processImage(image, backgroundWorker1);
             backgroundWorker1.RunWorkerAsync(filter);
-            //pictureBox1.Image = resultImage;
-            //pictureBox1.Refresh();
         }
 
         private void размытиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new BlurFilter();
-           // Bitmap resultImage = filter.processImage(image, backgroundWorker1);
             backgroundWorker1.RunWorkerAsync(filter);
-            //pictureBox1.Image = resultImage;
-            //pictureBox1.Refresh();
         }
 
         private void размытиеПоГауссуToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new GaussianFilter();
-            //Bitmap resultImage = filter.processImage(image, backgroundWorker1);
             backgroundWorker1.RunWorkerAsync(filter);
-            //pictureBox1.Image = resultImage;
-            //pictureBox1.Refresh();
         }
 
         private void оттенкиСерогоToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new GrayScaleFilters();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void фильтрСобеляToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new SobelFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void изменениеРезкоToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new SharpnessFilter();
             backgroundWorker1.RunWorkerAsync(filter);
-        }
-
-        
-
-        private void отменитьПоследнееДействиеToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (previousImage != null)
-            {
-                pictureBox1.Image = previousImage;
-                pictureBox1.Refresh();
-            }
         }
 
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -124,11 +118,11 @@ namespace CG_lab_1
             {
                 SaveFileDialog sfd = new SaveFileDialog();
                 sfd.Title = "Сохранить картинку как...";
-                sfd.OverwritePrompt = true; // показывать ли "Перезаписать файл" если пользователь указывает имя файла, который уже существует
-                sfd.CheckPathExists = true; // отображает ли диалоговое окно предупреждение, если пользователь указывает путь, который не существует
+                sfd.OverwritePrompt = true;
+                sfd.CheckPathExists = true;
 
                 sfd.Filter = "Image Files(*.BMP)|*.BMP|Image Files(*.JPG)|*.JPG|Image Files(*.GIF)|*.GIF|Image Files(*.PNG)|*.PNG|All files (*.*)|*.*";
-                sfd.ShowHelp = true; // отображается ли кнопка Справка в диалоговом окне
+                sfd.ShowHelp = true;
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
@@ -147,127 +141,127 @@ namespace CG_lab_1
 
         private void сепияToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new SepiaFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void медианныйФильтрToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new MedianFilter(9);
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void серыйМирToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new GrayWorldFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void линейноеРастяжениеГистограммыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new HistogramStretching();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void эффектСтеклаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new GlassEffect();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-
-        private void эффектВолныToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
-            Filters filter = new WavesFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void операторЩарраToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new ScharrFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void операторПрюиттаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new PrewitteFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void идеальноеОтражениеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new IdealReflectionFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void коррекцияСОпорнымЦветомToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
-            Filters filter = new ColorCorrectionFilter();
+            Filters filter = new ColorCorrectionFilter(Color.Red);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void redToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new ColorCorrectionFilter(Color.Red);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void greenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new ColorCorrectionFilter(Color.Green);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void blueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new ColorCorrectionFilter(Color.Blue);
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void тиснениеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new EmbossFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void переносToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new TranslationFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void поворотToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new RotationFilter(45,100,100);
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void motionBlurToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new MotionBlurFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void светящиесяКраяToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new GlowEdgeFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void hatToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new TopHatFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void blackHatToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new BlackHatFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void gradToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            previousImage = new Bitmap((Bitmap)pictureBox1.Image.Clone());
             Filters filter = new GradientFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void яркостьToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Filters filter = new Brightness();
             backgroundWorker1.RunWorkerAsync(filter);
         }
     }
