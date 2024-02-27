@@ -259,10 +259,14 @@ namespace CG_lab_1
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
-        private void яркостьToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-            Filters filter = new Brightness();
-            backgroundWorker1.RunWorkerAsync(filter);
+            if (history.Any())
+            {
+                image = history.Pop();
+                pictureBox1.Image = image;
+                pictureBox1.Refresh();
+            }
         }
     }
     
