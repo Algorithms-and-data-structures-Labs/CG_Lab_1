@@ -213,7 +213,7 @@ namespace CG_lab_1
 
         private void тиснениеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Filters filter = new EmbossFilter();
+            Filters filter = new GlowEdgeFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
@@ -237,25 +237,81 @@ namespace CG_lab_1
 
         private void светящиесяКраяToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Filters filter = new GlowEdgeFilter();
+            Filters filter = new EmbossFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void hatToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Filters filter = new TopHatFilter();
+        }
+        private void размытиеToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            double[,] selectedKernel = { { -1.0, 0.0, 1.0 }, { -1.0, 0.0, 1.0 }, { -1.0, 0.0, 1.0 } };
+            Filters filter = new TopHatFilter(selectedKernel);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void усилениеГраницToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            double[,] selectedKernel = { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+            Filters filter = new TopHatFilter(selectedKernel);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void обнаружениеВертикальныхЛинийToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            double[,] selectedKernel = { { 0,1,0 }, { 1, -4, 1 }, { 0, 1, 0 } };
+            Filters filter = new TopHatFilter(selectedKernel);
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void blackHatToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Filters filter = new BlackHatFilter();
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            double[,] selectedKernel = { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+            Filters filter = new BlackHatFilter(selectedKernel);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            double[,] selectedKernel = { { -1, 2, -1 }, { -1, 2, -1 }, { -1, 2, -1 } };
+            Filters filter = new BlackHatFilter(selectedKernel);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            double[,] selectedKernel = { { -1, -1, -1 }, { 2, 2, 2 }, { -1, -1, -1 } };
+            Filters filter = new BlackHatFilter(selectedKernel);
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void gradToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Filters filter = new GradientFilter();
+        }
+
+        private void горизонтальныеКраяToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            double[,] selectedKernel = { { 2, 2, 2 }, { 1, 1, 1 }, { 2, 2, 2 } };
+            Filters filter = new GradientFilter(selectedKernel);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void вертикальныеКраяToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            double[,] selectedKernel = { { 2, 1, 2 }, { 2, 1, 2 }, { 2, 1, 2 } };
+            Filters filter = new GradientFilter(selectedKernel);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void усилениеГраницToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            double[,] selectedKernel = { { 2, 2, 2 }, { 2, 2, 2 }, { 2, 2, 2 } };
+            Filters filter = new GradientFilter(selectedKernel);
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
@@ -268,6 +324,8 @@ namespace CG_lab_1
                 pictureBox1.Refresh();
             }
         }
+
+        
     }
     
 }

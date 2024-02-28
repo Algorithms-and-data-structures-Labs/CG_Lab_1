@@ -9,7 +9,14 @@ namespace CG_lab_1
 {
     internal class TopHatFilter : Filters
     {
-        private readonly int[,] kernel = new int[,] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+        private readonly double[,] kernel;
+
+        public TopHatFilter(double[,] selectedKernel)
+        {
+            this.kernel = selectedKernel;
+        }
+
+
 
         protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
         {
@@ -19,7 +26,9 @@ namespace CG_lab_1
         }
         private int OpeningOperation(Bitmap sourceImage, int x, int y)
         {
-            int result = sourceImage.GetPixel(x, y).R;
+            int result = 255; // Инициализируем максимальным значением, чтобы был гарантировано нахождение минимума
+            int kernelSize = kernel.GetLength(0);
+
             for (int l = -1; l <= 1; l++)
             {
                 for (int k = -1; k <= 1; k++)
@@ -27,10 +36,14 @@ namespace CG_lab_1
                     int idX = Clamp(x + k, 0, sourceImage.Width - 1);
                     int idY = Clamp(y + l, 0, sourceImage.Height - 1);
                     Color neighborColor = sourceImage.GetPixel(idX, idY);
-                    result = Math.Min(result, neighborColor.R);
+                    double kernelValue = kernel[l + 1, k + 1]; // Получаем значение ядра для текущего соседа
+                    result = (int)Math.Min(result, neighborColor.R * kernelValue); // Учитываем вес соседа согласно ядру
                 }
             }
+
             return result;
         }
+
+
     }
 }
