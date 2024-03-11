@@ -243,6 +243,8 @@ namespace CG_lab_1
 
         private void hatToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Filters filter = new TopHat();
+            backgroundWorker1.RunWorkerAsync(filter);
         }
         private void размытиеToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -250,7 +252,7 @@ namespace CG_lab_1
             Filters filter = new TopHatFilter(selectedKernel);
             backgroundWorker1.RunWorkerAsync(filter);
         }
-
+        
         private void усилениеГраницToolStripMenuItem_Click(object sender, EventArgs e)
         {
             double[,] selectedKernel = { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
@@ -267,6 +269,8 @@ namespace CG_lab_1
 
         private void blackHatToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Filters filter = new BlackHat();
+            backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -292,6 +296,8 @@ namespace CG_lab_1
 
         private void gradToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Filters filter = new Grad();
+            backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void горизонтальныеКраяToolStripMenuItem_Click(object sender, EventArgs e)

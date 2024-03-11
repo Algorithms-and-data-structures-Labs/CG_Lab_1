@@ -15,9 +15,6 @@ namespace CG_lab_1
         {
             this.kernel = selectedKernel;
         }
-
-
-
         protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y)
         {
             int openingResult = OpeningOperation(sourceImage, x, y);
